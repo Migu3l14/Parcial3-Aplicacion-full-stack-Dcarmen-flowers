@@ -1,0 +1,56 @@
+openapi: 3.0.3
+info:
+  title: D'CARMEN Flowers API
+  version: "1.0.0"
+servers:
+  - url: http://localhost:3000/api
+paths:
+  /auth/login:
+    post:
+      summary: Login (retorna token simulado)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username: { type: string }
+                password: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: { type: string }
+  /products:
+    get:
+      summary: Listar productos
+      responses:
+        '200':
+          description: Lista de productos
+    post:
+      summary: Crear producto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201': { description: Created }
+components:
+  schemas:
+    Product:
+      type: object
+      required: [name, price, stock]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        description: { type: string }
+        price: { type: number }
+        stock: { type: number }
+        imageUrl: { type: string }

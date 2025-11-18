@@ -1,0 +1,113 @@
+@startuml Diagrama de Clases - D'CARMEN FLOWERS
+
+' Definición de clases principales
+
+class Product {
+  - id: string
+  - name: string
+  - description?: string
+  - price: number
+  - stock: number
+  - imageUrl?: string
+}
+
+class Client {
+  - id: string
+  - name: string
+  - phone: string
+  - email?: string
+  - address?: string
+}
+
+class Courier {
+  - id: string
+  - name: string
+  - phone: string
+  - status: 'available' | 'busy' | 'inactive'
+}
+
+class OrderItem {
+  - productId: string
+  - quantity: number
+  - unitPrice: number
+}
+
+class Order {
+  - id: string
+  - clientId: string
+  - courierId?: string
+  - createdAt: string
+  - total: number
+  - status: 'pending' | 'confirmed' | 'preparing' | 'out_for_delivery' | 'delivered' | 'cancelled'
+  - items: OrderItem[]
+  - note?: string
+  + calculateTotal(): number
+}
+
+class Store {
+  - products: Product[]
+  - clients: Client[]
+  - couriers: Courier[]
+  - orders: Order[]
+}
+
+' Controladores
+
+class ProductsController {
+  + getAll(): Product[]
+  + create(product: Product): Product
+  + update(id: string, product: Partial<Product>): Product
+}
+
+class ClientsController {
+  + getAll(): Client[]
+  + create(client: Client): Client
+}
+
+class CouriersController {
+  + getAll(): Courier[]
+  + create(courier: Courier): Courier
+}
+
+class OrdersController {
+  + getAll(status?: string): Order[]
+  + create(order: Order): Order
+  + updateStatus(id: string, status: string, courierId?: string): Order
+}
+
+class AuthController {
+  + login(username: string): { token: string, user: object }
+}
+
+' Relaciones
+
+Order "1" *-- "many" OrderItem : contains
+Order "many" --> "1" Client : belongs to
+Order "many" --> "0..1" Courier : assigned to
+OrderItem "many" --> "1" Product : references
+Store "1" o-- "many" Product : stores
+Store "1" o-- "many" Client : stores
+Store "1" o-- "many" Courier : stores
+Store "1" o-- "many" Order : stores
+ProductsController ..> Store : uses
+ClientsController ..> Store : uses
+CouriersController ..> Store : uses
+OrdersController ..> Store : uses
+OrdersController ..> Product : validates stock
+OrdersController ..> Client : validates
+OrdersController ..> Courier : assigns
+
+note right of Order
+  El total se calcula
+  automáticamente al crear
+  el pedido basándose en
+  los items
+end note
+
+note right of Store
+  Almacenamiento en memoria.
+  En producción usar base de datos.
+end note
+
+@enduml
+
