@@ -1,4 +1,6 @@
+Miguel Agel Quintero Aragon NRC 408592
 # D'CARMEN FLOWERS - Gestor de Pedidos
+
 
 ## Descripción
 Aplicación web completa para gestionar productos, clientes, repartidores y pedidos para D'CARMEN FLOWERS.
