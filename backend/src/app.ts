@@ -6,7 +6,6 @@ import productsRoutes from './routes/products.routes';
 import clientsRoutes from './routes/clients.routes';
 import couriersRoutes from './routes/couriers.routes';
 import ordersRoutes from './routes/orders.routes';
-import authRoutes from './routes/auth.routes';
 
 const app = express();
 app.use(cors());
@@ -15,7 +14,6 @@ app.use(express.json());
 // Swagger documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use('/api/auth', authRoutes);
 app.use('/api/products', productsRoutes);
 app.use('/api/clients', clientsRoutes);
 app.use('/api/couriers', couriersRoutes);

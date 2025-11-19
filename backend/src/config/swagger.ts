@@ -174,26 +174,6 @@ const swaggerDefinition: SwaggerDefinition = {
           },
         },
       },
-      AuthResponse: {
-        type: 'object',
-        properties: {
-          token: {
-            type: 'string',
-            description: 'Token de autenticación',
-          },
-          user: {
-            type: 'object',
-            properties: {
-              username: {
-                type: 'string',
-              },
-              role: {
-                type: 'string',
-              },
-            },
-          },
-        },
-      },
       SalesReport: {
         type: 'object',
         properties: {
